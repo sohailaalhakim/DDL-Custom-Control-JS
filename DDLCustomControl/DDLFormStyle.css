@@ -1,0 +1,154 @@
+﻿
+/* ===== Google Font Import - Poppins ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #E3F2FD;
+    
+}
+
+.select-menu {
+    width: 380px;
+    margin: 140px auto;
+
+}
+ .select-menu .select-btn  {
+
+        display: flex;
+        height: 55px;
+        background: #fff;
+        padding: 20px;
+        font-size: 18px;
+        font-weight: 400;
+        border-radius: 8px;
+        align-items: center;
+        cursor: pointer;
+        justify-content: space-between;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+.select-btn i {
+    font-size: 25px;
+    transition: 0.3s;
+}
+
+.select-menu .select-btn i.active {
+    transform: rotate(-180deg);
+}
+.select-menu .options {
+    position: relative;
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 0 3px rgba(0,0,0,0.1);
+    display: none;
+    width: 380px;
+}
+
+.select-menu.active .options {
+    display: block;
+    position: absolute;
+}
+
+/*.options .option {
+    display: flex;
+    height: 55px;
+    cursor: pointer;
+    padding: 0 16px;
+    border-radius: 8px;
+    align-items: center;
+    background: #fff;
+}*/
+.options .option {
+    cursor: pointer;
+    align-items: center;
+    border-radius: 8px;
+    list-style-type: none;
+    border-radius: 8px;
+}
+
+.options .child-options {
+    color: black;
+    margin: 20px;
+    background: #fff;
+}
+.options .option:hover {
+    background-color: dodgerblue;
+}
+
+.option i {
+    font-size: 25px;
+    margin-right: 12px;
+}
+
+.option .option-text {
+    font-size: 20px;
+    color: #333;
+}
+.option-badge {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+.options.scrollable {
+    max-height: 300px; 
+    overflow-y: auto;
+}
+
+/* search input style */
+.select-menu .search-input {
+    margin: 5px auto;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    width: 380px;
+    display: none;
+}
+.select-menu.active .search-input {
+    display: block;
+}
+
+.option.selected {
+    background-color: dodgerblue; 
+    color: #fff; 
+    font-weight: bold; 
+}
+
+
+.button-container {
+    margin: 5px auto;
+    text-align: center;
+}
+
+ .select-all-btn,
+ .unselect-all-btn {
+    margin: 5px;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #1D5D9B;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.select-all-btn:hover,
+.unselect-all-btn:hover {
+ background-color: #0056b3;
+}
+.fixed-dropdown {
+    position: fixed;
+    /* Add any other styles you want for the dropdown */
+}
