@@ -19,8 +19,8 @@
             },
         
         initText: "اختر الادارة",
-        onChange: function () {
-
+        onChange: function (selectedItems) {
+            console.log("Selected Items : ",selectedItems);
         }
     }
     ddlControl.initFunc(initParamNorml);
@@ -65,7 +65,7 @@
 
         initText: "اختر الادارة",
     }
-    ddlControl.initFunc(initParamMultiSelect);
+    //ddlControl.initFunc(initParamMultiSelect);
 
     var initParamTreeView = {
         id: "DDLTreeView_container",
@@ -117,11 +117,6 @@
         initText: "اختر الادارة",
     }
    //ddlControl.initFunc(initParamMixed);
-
-
-
-
-
 
     //get all selected options by div id 
 

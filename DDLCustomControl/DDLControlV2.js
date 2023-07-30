@@ -9,7 +9,6 @@
 
         const { id, data, additionalOptions, initText } = initParam;
 
-
         if (!Array.isArray(data) || data.length === 0) {
             console.error('Error: Invalid or empty "data" array in initParam');
             return;
@@ -37,7 +36,7 @@
 
    
         const filteredInitParam = {
-            id: id,
+            id: initParam.id,
             data: filteredData,
 
             additionalOptions: {
@@ -45,7 +44,8 @@
                 hasMultiSelect: typeof additionalOptions.hasMultiSelect === 'boolean' ? additionalOptions.hasMultiSelect : false,
                 hasTreeView: typeof additionalOptions.hasTreeView === 'boolean' ? additionalOptions.hasTreeView : false,
             },
-            initText,
+            initText: initParam.initText,
+            onChange: initParam.onChange
         };
    
         document.addEventListener('click', function (event) {
@@ -69,7 +69,6 @@
 
         // Create the dropdown structure
         const menuId = id + 'select_menu';
-        console.log(menuId);
         const selectMenu = document.createElement('div');
         selectMenu.classList.add('select-menu');
         selectMenu.setAttribute('id', menuId);
@@ -253,8 +252,9 @@
                     isOpen = false;
                     selectBtn.classList.remove('active');
                     selectMenu.classList.remove('active');
+                    // fire onChange 
+                    initParam.onChange(selectedOptionText);
 
-                    console.log('Selected option:', selectedOptionText);
                 }
             });
         });
@@ -384,30 +384,59 @@
     },
 
     handleCheckboxSelection: function (selectMenu) {
+
         const selectedOptions = [];
         const optionItems = selectMenu.querySelectorAll('.option');
-        optionItems.forEach(function (optionItem) {
 
+        const updateSelectedOptions = function () {
+            selectedOptions.length = 0;
+            optionItems.forEach(function (item) {
+                if (item.classList.contains('selected')) {
+                    selectedOptions.push(item.querySelector('.option-text').textContent);
+                }
+            });
+
+            const selectText = selectMenu.querySelector('.sBtn-text');
+            if (selectedOptions.length > 0) {
+                selectText.textContent = selectedOptions.join(', ');
+            } else {
+                const initText = selectMenu.getAttribute('data-init-text');
+                selectText.textContent = initText;
+            }
+        };
+
+        optionItems.forEach(function (optionItem) {
             const checkbox = optionItem.querySelector('input[type="checkbox"]');
             const optionText = optionItem.querySelector('.option-text').textContent;
 
-            if (checkbox.checked) {
+            const handleOptionItemClick = function () {
+                if (checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                }
+
+                optionItem.classList.toggle('selected');
+                updateSelectedOptions();
+            };
+
+            if (checkbox) {
+                checkbox.addEventListener('change', function (event) {
+                    optionItem.classList.toggle('selected', event.target.checked);
+                    updateSelectedOptions();
+                });
+            }
+
+            optionItem.addEventListener('click', handleOptionItemClick);
+
+            if (checkbox && checkbox.checked) {
                 optionItem.classList.add('selected');
                 selectedOptions.push(optionText);
             }
-            else {
+            else if (optionItem.classList.contains('selected')) {
+                selectedOptions.push(optionText);
                 optionItem.classList.remove('selected');
 
             }
         });
-
-        const selectText = selectMenu.querySelector('.sBtn-text');
-        if (selectedOptions.length > 0) {
-            selectText.textContent = selectedOptions.join(', ');
-        } else {
-            const initText = selectMenu.getAttribute('data-init-text');
-            selectText.textContent = initText;
-        }
     },
 
     getter: function (menuId) {
@@ -494,5 +523,8 @@
             selectText.textContent = initText;
         }
     },
+
+
+
 
 };
